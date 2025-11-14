@@ -30,6 +30,7 @@ jobs:
             
     GitLeaks-scan:
         runs-on: self-hosted
+        needs: compiling
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
