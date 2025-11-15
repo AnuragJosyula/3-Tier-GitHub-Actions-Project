@@ -106,7 +106,7 @@ jobs:
             - name: Run Trivy vulnerability scanner in fs mode
               uses: aquasecurity/trivy-action@0.28.0
               with:
-                scan-type: 'fs'
+                scan-type: image
                 scan-ref: anuragjosyula/frontend:latest
                 severity: 'HIGH,CRITICAL'
                 vuln-type: 'os,library'
@@ -123,7 +123,7 @@ jobs:
             - name: Run Trivy vulnerability scanner in fs mode
               uses: aquasecurity/trivy-action@0.28.0
               with:
-                scan-type: 'fs'
+                scan-type: image
                 scan-ref: anuragjosyula/backend:latest
                 severity: 'HIGH,CRITICAL'
                 vuln-type: 'os,library'
