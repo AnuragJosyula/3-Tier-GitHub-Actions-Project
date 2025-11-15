@@ -93,3 +93,38 @@ jobs:
                 push: true
                 tags: anuragjosyula/frontend:latest
                 file: ./client/Dockerfile
+
+    Trivy_image_scan_frontend:
+        runs-on: self-hosted
+        needs:
+          - build_docker_backend_and_push
+          - build_docker_frontend_and_push
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Run Trivy vulnerability scanner in fs mode
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                scan-type: 'fs'
+                scan-ref: anuragjosyula/frontend:latest
+                severity: 'HIGH,CRITICAL'
+                vuln-type: 'os,library'
+    
+    Trivy_image_scan_backend:
+        runs-on: self-hosted
+        needs:
+          - build_docker_backend_and_push
+          - build_docker_frontend_and_push
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Run Trivy vulnerability scanner in fs mode
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                scan-type: 'fs'
+                scan-ref: anuragjosyula/backend:latest
+                severity: 'HIGH,CRITICAL'
+                vuln-type: 'os,library'
+                
