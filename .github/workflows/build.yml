@@ -1,9 +1,5 @@
 on:
-  push:
-    branches: [ main ]
-      
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 
 jobs:
@@ -57,7 +53,7 @@ jobs:
                 username: ${{ vars.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Set up QEMU
+            - name: Set up QEMU     #for bulding multi-arch images
               uses: docker/setup-qemu-action@v3
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3
@@ -103,7 +99,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Run Trivy vulnerability scanner in fs mode
+            - name: Run Trivy vulnerability scanner in image mode
               uses: aquasecurity/trivy-action@0.28.0
               with:
                 scan-type: image        # diff scan types like fs, image, this is important for trivy
@@ -120,7 +116,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Run Trivy vulnerability scanner in fs mode
+            - name: Run Trivy vulnerability scanner in image mode
               uses: aquasecurity/trivy-action@0.28.0
               with:
                 scan-type: image            # diff scan types like fs, image, this is important for trivy
